@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<title>badge generator</title>
+<script src="jquery.js"></script>
+<style>
+body {
+	margin: 0px;
+}
+div#badges {
+}
+div.badge {
+	margin: 5px;
+}
+svg.svg-stitek {
+	border: 1px solid #ccc;
+	float: left;
+	margin: 0px;
+	font-family: Ubuntu;
+}
+text {
+	dominant-baseline: middle;
+}
+.nadpis {
+	font-size: 180px;
+}
+.prednasejici {
+	font-size: 100px;
+	dominant-baseline: alphabetical;
+}
+.prednasejicipod {
+	fill: #ddd;
+	z-index: 5;
+}
+.role {
+	font-size: 80px;
+	fill: #888;
+}
+</style>
+</head>
+<body>
+<div id="badges">
+</div>
+<script>
+$(document).ready(function () {
+	/* load badge file */
+	var file = '';
+
+
+	/* generate users */
+	/* 93 x 59 */
+	$.getJSON('users.json', function (data) {
+		$.each(data.users, function (key, value) {
+			jmeno = value.name
+			role = value.role
+
+			$('div#badges').append('<div class="badge" id="user-' + key + '\">' + jmeno + '</div>');
+badge = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-stitek" width="93mm" height="59mm" viewBox="0 0 590 930"> \
+<text x="295" y="150" text-anchor="middle" class="nadpis">LinuxDays 2014</text> \
+<rect y="300" x="-500" width="5000" height="250" class="prednasejicipod"/> \
+<text x="290" y="435" text-anchor="middle" class="prednasejici">'+jmeno+'</text> \
+<text x="50" y="750" text-anchor="middle" class="role">'+role+'</text> \
+<image x="600" y="580" width="350" height="350" xlink:href="logo.svg"> \
+</svg>';
+			$('div#user-'+key).html(badge);
+
+			$('div#user-'+key+' text.prednasejici').each(function (key, el) {
+				/* vypočítat parametry */
+				width_final = 900;
+				height_final = 300;
+				x_base = 250;
+				y_base = 450;
+				width_base = el.getBBox().width;
+				height_base = el.getBBox().height;
+				ratio = Math.min(width_final/width_base, height_final/height_base, 1.5);
+				/* zvětšit */
+				$(el).attr('transform', 'translate('+(-x_base * (ratio - 1))+', '+(-y_base * (ratio - 1))+') scale('+ratio+')');
+			});
+
+		});
+	});
+});
+</script>
+</html>
