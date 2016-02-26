@@ -14,7 +14,7 @@ div.badge {
 	margin: 5px;
 }
 svg.svg-stitek {
-	border: 1px solid #ccc;
+	border: 1px dashed #777;
 	float: left;
 	margin: 0px;
 	font-family: Ubuntu;
@@ -28,15 +28,23 @@ text {
 .prednasejici {
 	font-size: 100px;
 	dominant-baseline: alphabetical;
+	fill: #fff;
 }
 .prednasejicipod {
-	fill: #ddd;
+	fill: #222;
 	z-index: 5;
 }
 .role {
 	font-size: 80px;
-	fill: #888;
+	fill: #444;
 }
+.hody {
+	font-size: 70px;
+	fill: #444;
+}
+.twitter {
+	font-size: 40px;
+	}
 </style>
 </head>
 <body>
@@ -52,22 +60,36 @@ $(document).ready(function () {
 	/* 93 x 59 */
 	$.getJSON('users.json', function (data) {
 		$.each(data.users, function (key, value) {
-			jmeno = value.name
+			jmeno = value.jmeno
 			role = value.role
+			if (typeof(value.twitter) == 'string') {
+				twitter = '@' + value.twitter;
+			} else {
+				twitter = '';
+			}
+
+			role_move = -200;
+			role_class = ''
+			if (jmeno == 'Petr Hodač') {
+				role_move = -350;
+				role_class=' hody';
+			}
+				
 
 			$('div#badges').append('<div class="badge" id="user-' + key + '\">' + jmeno + '</div>');
-badge = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-stitek" width="93mm" height="59mm" viewBox="0 0 590 930"> \
-<text x="295" y="150" text-anchor="middle" class="nadpis">LinuxDays 2014</text> \
+badge = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-stitek" width="90mm" height="57mm" viewBox="0 0 590 930"> \
+<!-- <text x="295" y="150" text-anchor="middle" class="nadpis">LinuxDays 2014</text> -->\
 <rect y="300" x="-500" width="5000" height="250" class="prednasejicipod"/> \
-<text x="290" y="435" text-anchor="middle" class="prednasejici">'+jmeno+'</text> \
-<text x="50" y="750" text-anchor="middle" class="role">'+role+'</text> \
-<image x="600" y="580" width="350" height="350" xlink:href="logo.svg"> \
+<text x="250" y="435" text-anchor="middle" class="prednasejici">'+jmeno+'</text> \
+<text x="'+role_move+'" y="750" text-anchor="left" class="role'+role_class+'">'+role+'</text> \
+<image x="-400" y="-100" width="1400" height="500" xlink:href="logo-if.svg" class="logo"/> \
+<image x="0" y="700" width="800" height="800" xlink:href="tux.svg" class="tux" transform="rotate(-40)"/> \
 </svg>';
 			$('div#user-'+key).html(badge);
 
 			$('div#user-'+key+' text.prednasejici').each(function (key, el) {
 				/* vypočítat parametry */
-				width_final = 900;
+				width_final = 910;
 				height_final = 300;
 				x_base = 250;
 				y_base = 450;

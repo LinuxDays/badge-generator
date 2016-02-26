@@ -1,4 +1,5 @@
 {"users":[
-{"name":"Jméno Příjmení","role":"návštěvník"},
-{"name":"Jméno \"Mezijméno\" Příjmení, titul","role":"návštěvník"}
+{"jmeno": "John Doe", "nick": "johhhhn", "role": "Pomocník"},
+{"jmeno": "Jane Doe", "nick": "sdflskdjf", "role": "Pomocník"},
+{"jmeno": "Joseph Doe", "twitter": "vsrs", "role": "Přednášející"}
 ]}
